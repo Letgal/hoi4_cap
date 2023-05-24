@@ -1,0 +1,234 @@
+freedom_desire_category = {
+	### DECISIONS ###
+	decrease_fd = {
+		icon = oppression
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = fd_at_least_5
+				check_variable = { var = freedom_desire value = 5 }
+			}
+			has_civil_war = no
+		}
+		cost = 30
+		days_re_enable = 30
+		complete_effect = {
+			subtract_from_variable = { freedom_desire = 5 tooltip = fd_minus_5 }
+			add_stability = -0.015
+		}
+	}
+	crackdown_on_democrats = {
+		icon = oppression
+		visible = { NOT = { has_government = democratic } }
+		available = { has_civil_war = no }
+		cost = 60
+		days_re_enable = 120
+		complete_effect = {
+			add_stability = -0.05
+			add_popularity = { ideology = democratic popularity = -0.05 }
+		}
+	}
+	decrease_5_fd_debug = {
+		visible = { is_debug = yes }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = fd_at_least_5
+				check_variable = { var = freedom_desire value = 5 }
+			}
+		}
+		complete_effect = { subtract_from_variable = { freedom_desire = 5 tooltip = fd_minus_5 } }
+	}
+	decrease_20_fd_debug = {
+		visible = { is_debug = yes }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = fd_at_least_20
+				check_variable = { var = freedom_desire value = 20 }
+			}
+		}
+		complete_effect = { subtract_from_variable = { freedom_desire = 20 tooltip = fd_minus_20 } }
+	}
+	decrease_50_fd_debug = {
+		visible = { is_debug = yes }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = fd_at_least_50
+				check_variable = { var = freedom_desire value = 50 }
+			}
+		}
+		complete_effect = { subtract_from_variable = { freedom_desire = 50 tooltip = fd_minus_50 } }
+	}
+	increase_5_fd_debug = {
+		visible = { is_debug = yes }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = fd_at_most_95
+				check_variable = { var = freedom_desire value = 95 compare = less_than_or_equals }
+			}
+		}
+		complete_effect = { add_to_variable = { freedom_desire = 5 tooltip = fd_plus_5 } }
+	}
+	increase_20_fd_debug = {
+		visible = { is_debug = yes }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = fd_at_most_80
+				check_variable = { var = freedom_desire value = 80 compare = less_than_or_equals }
+			}
+		}
+		complete_effect = { add_to_variable = { freedom_desire = 20 tooltip = fd_plus_20 } }
+	}
+	increase_50_fd_debug = {
+		visible = { is_debug = yes }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = fd_at_most_50
+				check_variable = { var = freedom_desire value = 50 compare = less_than_or_equals }
+			}
+		}
+		complete_effect = { add_to_variable = { freedom_desire = 50 tooltip = fd_plus_50 } }
+	}
+
+	### MISSIONS ###
+	freedom_rallies_mission = {
+		icon = generic_political_rally
+		visible = { always = no }
+		activation = {
+			has_civil_war = no
+			NOT = {
+				has_idea = freedom_rallies
+				has_idea = mass_rallies
+			}
+			check_variable = { var = freedom_desire value = 35 }
+		}
+		is_good = no
+		days_mission_timeout = 0
+		complete_effect = {
+			if = {
+				limit = { NOT = { has_idea = mass_rallies } }
+				add_ideas = freedom_rallies
+			}
+		}
+	}
+	freedom_movement_mission = {
+		icon = generic_civil_support
+		visible = { always = no }
+		activation = {
+			has_civil_war = no
+			NOT = { has_idea = freedom_movement }
+			check_variable = { var = freedom_desire value = 50 }
+		}
+		is_good = no
+		days_mission_timeout = 0
+		complete_effect = { add_ideas = freedom_movement }
+	}
+	cw_traitors_mission = {
+		icon = generic_ignite_civil_war
+		available = { hidden_trigger = { always = no } }
+		cancel_trigger = { custom_trigger_tooltip = { tooltip = cw_traitors_avert check_variable = { freedom_desire < 65 } } }
+		activation = {
+			has_civil_war = no
+			has_government = democratic
+			check_variable = { var = freedom_desire value = 65 }
+		}
+		is_good = no
+		highlight_states = {
+			highlight_states_trigger = { is_core_of = ROOT }
+			highlight_color_while_active = 3
+		}
+		days_mission_timeout = 45
+		timeout_effect = {
+			set_variable = { freedom_desire = 0 }
+			start_civil_war = { ideology = communism size = 0.5 } # Other democrats?
+		}
+	}
+	mass_rallies_mission = {
+		icon = generic_political_rally
+		visible = { always = no }
+		activation = {
+			has_civil_war = no
+			NOT = {
+				has_idea = mass_rallies
+				has_government = democratic
+			}
+			check_variable = { var = freedom_desire value = 75 }
+		}
+		is_good = no
+		days_mission_timeout = 0
+		complete_effect = {
+			if = {
+				limit = { has_idea = freedom_rallies }
+				swap_ideas = {
+					remove_idea = freedom_rallies
+					add_idea = mass_rallies
+				}
+				else = { add_ideas = mass_rallies }
+			}
+		}
+	}
+	cw_freedom_mission = {
+		icon = generic_ignite_civil_war
+		available = { hidden_trigger = { always = no } }
+		#available = { has_country_flag = dp_ineffective }
+		cancel_trigger = {
+			if = {
+				limit = { has_government = neutrality }
+				custom_trigger_tooltip = { tooltip = cw_freedom_a_avert check_variable = { freedom_desire < 80 } }
+				else = { custom_trigger_tooltip = { tooltip = cw_freedom_t_avert check_variable = { freedom_desire < 95 } } }
+			}
+			OR = {
+				NOT = { party_popularity@ruling_party < 0.5 }
+				democratic < 0.3
+			}
+		}
+		activation = {
+			has_civil_war = no
+			NOT = { has_government = democratic }
+			if = {
+				limit = { has_government = neutrality }
+				check_variable = { var = freedom_desire value = 80 }
+				else = { check_variable = { var = freedom_desire value = 95 } }
+			}
+			OR = {
+				party_popularity@ruling_party < 0.5
+				NOT = { democratic < 0.3 }
+			}
+		}
+		is_good = no
+		highlight_states = {
+			highlight_states_trigger = { is_core_of = ROOT }
+			highlight_color_while_active = 3
+		}
+		days_mission_timeout = 30
+		timeout_effect = {
+			set_variable = { freedom_desire = 0 }
+			start_civil_war = { ideology = democratic size = 0.5 }
+		}
+	}
+	cw_shorten_debug = {
+		visible = {
+			is_debug = yes
+			OR = {
+				has_active_mission = cw_traitors_mission
+				has_active_mission = cw_freedom_mission
+			}
+		}
+		complete_effect = {
+			if = {
+				limit = { has_active_mission = cw_traitors_mission }
+				add_days_mission_timeout = {
+					mission = cw_traitors_mission
+					days = -45
+				}
+			}
+			if = {
+				limit = { has_active_mission = cw_freedom_mission }
+				add_days_mission_timeout = {
+					mission = cw_freedom_mission
+					days = -30
+				}
+			}
+		}
+		priority = -1
+		ai_will_do = { base = 0 }
+	}
+}

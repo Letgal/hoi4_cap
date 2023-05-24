@@ -1,0 +1,29 @@
+add_namespace = rally
+
+country_event = {
+	id = rally.1
+	title = rally.1.t
+	desc = rally.1.d
+
+	trigger = {
+		OR = {
+			has_idea = freedom_rallies
+			has_idea = mass_rallies
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+		modifier = {
+			add = -60
+			has_idea = mass_rallies
+		}
+	}
+	
+	option = {
+		name = rally.1.a
+		add_political_power = -30
+		add_stability = -0.05
+		subtract_from_variable = { freedom_desire = 5 tooltip = fd_minus_5 }
+	}
+}

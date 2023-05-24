@@ -1,0 +1,201 @@
+defined_text = {
+	name = GetCensorshipLaw
+	text = {
+		trigger = { has_idea = free_speech }
+		localization_key = free_speech
+	}
+	text = {
+		trigger = { has_idea = light_censorship }
+		localization_key = light_censorship
+	}
+	text = {
+		trigger = { has_idea = moderate_censorship }
+		localization_key = moderate_censorship
+	}
+	text = {
+		trigger = { has_idea = total_censorship }
+		localization_key = total_censorship
+	}
+	text = { localization_key = censorship_undefined }
+}
+
+defined_text = {
+	name = GetAffectedDpp
+	text = {
+		trigger = { NOT = { has_government = democratic } }
+		localization_key = fd_affected_dpp
+	}
+}
+
+defined_text = {
+	name = GetIneffectivenessNote
+	text = {
+		trigger = { has_country_flag = dp_ineffective }
+		localization_key = dp_is_ineffective
+	}
+}
+
+defined_text = {
+	name = GetFdModifier
+	text = {
+		trigger = { has_idea = freedom_movement }
+		localization_key = fd_affected_freedom_movement
+	}
+	text = {
+		trigger = { has_idea = freedom_movement has_idea = mass_rallies }
+		localization_key = fd_affected_mass_rallies
+	}
+	text = {
+		trigger = { NOT = { has_idea = freedom_movement } has_idea = mass_rallies }
+		localization_key = fd_affected_mass_rallies_exclusive
+	}
+}
+
+defined_text = {
+	name = GetWarStatus
+	text = {
+		trigger = { surrender_progress > 0.05 }
+		localization_key = fd_affected_war_losing
+	}
+	text = { localization_key = fd_affected_war }
+}
+
+defined_text = { name = GetActivationIntro text = { localization_key = modifier_details_intro } }
+defined_text = {
+	name = GetTrigger_CivilWar_NOT
+	text = {
+		trigger = { has_civil_war = no }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}
+defined_text = {
+	name = GetTrigger_Has50%Democratic
+	text = {
+		trigger = { NOT = { democratic < 0.5 } }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}
+defined_text = {
+	name = GetTrigger_Has_30%Ruling_NOT
+	text = {
+		trigger = { party_popularity@ruling_party < 0.3 }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}
+defined_text = {
+	name = GetFrStatus
+	text = {
+		trigger = {
+			check_variable = { var = freedom_desire value = 35 }
+			OR = { has_idea = freedom_rallies has_idea = mass_rallies }
+		}
+		localization_key = modifier_active_status
+	}
+	text = { localization_key = modifier_inactive_status }
+}
+defined_text = {
+	name = GetTrigger_FrHasFd
+	text = {
+		trigger = { check_variable = { var = freedom_desire value = 35 } }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}
+defined_text = {
+	name = GetFmStatus
+	text = {
+		trigger = {
+			check_variable = { var = freedom_desire value = 50 }
+			has_idea = freedom_movement
+		}
+		localization_key = modifier_active_status
+	}
+	text = { localization_key = modifier_inactive_status }
+}
+defined_text = {
+	name = GetTrigger_FmHasFd
+	text = {
+		trigger = { check_variable = { var = freedom_desire value = 50 } }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}
+defined_text = {
+	name = GetCwbStatus
+	text = {
+		trigger = {
+			check_variable = { var = freedom_desire value = 65 }
+			has_active_mission = cw_betrayal_mission
+		}
+		localization_key = modifier_active_status
+	}
+	text = { localization_key = modifier_inactive_status }
+}
+defined_text = {
+	name = GetTrigger_CwtHasFd
+	text = {
+		trigger = { check_variable = { var = freedom_desire value = 65 } }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}
+defined_text = {
+	name = GetMrStatus
+	text = {
+		trigger = {
+			check_variable = { var = freedom_desire value = 75 }
+			has_idea = mass_rallies
+		}
+		localization_key = modifier_active_status
+	}
+	text = { localization_key = modifier_inactive_status }
+}
+defined_text = {
+	name = GetTrigger_MrHasFd
+	text = {
+		trigger = { check_variable = { var = freedom_desire value = 75 } }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}
+defined_text = {
+	name = GetCwfaStatus
+	text = {
+		trigger = {
+			check_variable = { var = freedom_desire value = 80 }
+			has_active_mission = cw_freedom_mission
+		}
+		localization_key = modifier_active_status
+	}
+	text = { localization_key = modifier_inactive_status }
+}
+defined_text = {
+	name = GetTrigger_CwfaHasFd
+	text = {
+		trigger = { check_variable = { var = freedom_desire value = 80 } }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}
+defined_text = {
+	name = GetCwftStatus
+	text = {
+		trigger = {
+			check_variable = { var = freedom_desire value = 95 }
+			has_active_mission = cw_freedom_mission
+		}
+		localization_key = modifier_active_status
+	}
+	text = { localization_key = modifier_inactive_status }
+}
+defined_text = {
+	name = GetTrigger_CwftHasFd
+	text = {
+		trigger = { check_variable = { var = freedom_desire value = 95 } }
+		localization_key = TRIGGER_FULLFILLED_PREFIX
+	}
+	text = { localization_key = TRIGGER_UNFULLFILLED_PREFIX }
+}

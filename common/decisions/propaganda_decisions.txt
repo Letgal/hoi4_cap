@@ -1,0 +1,488 @@
+censorship_category = {
+	war_propaganda = {
+
+		icon = generic_prepare_civil_war
+
+		available = {
+			NOT = { has_country_flag = war_propaganda_campaign_running }
+			threat > 0.5
+			has_war_support < 0.5
+			has_offensive_war = no
+			if = {
+				limit = {
+					tag = SPR
+					has_dlc = "La Resistance"
+				}
+				NOT = {
+					has_idea = SPR_political_violence
+				}
+			}
+			if = {
+				limit = {
+					original_tag = SPR
+					has_dlc = "La Resistance"
+				}
+				has_global_flag = scw_over
+			}
+		}
+
+		visible = {
+			
+		}
+
+		fire_only_once = no
+
+		days_remove = 90
+		days_re_enable = 180
+
+		cost = 150
+
+		modifier = {
+			war_support_weekly = 0.01
+		}
+
+		complete_effect = {
+			set_country_flag = war_propaganda_campaign_running
+		}
+		remove_effect = {
+			clr_country_flag = war_propaganda_campaign_running
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				has_war_support < 0.4
+				has_war = yes
+			}
+		}
+	}
+
+	#Propaganda campaign against a country in offensive that has caused a lot of tension and started a war
+	war_propaganda_against_warmonger = {
+
+		icon = generic_prepare_civil_war
+
+		available = {
+			NOT = { has_country_flag = war_propaganda_campaign_running }
+			FROM = {
+				OR = {
+					is_justifying_wargoal_against = ROOT
+					AND = {
+						has_war_with = ROOT
+						is_neighbor_of = ROOT
+					}
+					has_offensive_war = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = SPR
+					has_dlc = "La Resistance"
+				}
+				NOT = {
+					has_idea = SPR_political_violence
+				}
+			}
+			if = {
+				limit = {
+					original_tag = SPR
+					has_dlc = "La Resistance"
+				}
+				has_global_flag = scw_over
+			}
+			
+			# lower the cost for neighbors
+			if = {
+				limit = {
+					FROM = {
+						is_neighbor_of = ROOT
+					}
+					set_temp_variable = { war_propaganda_cost = 50 }
+				}
+			}
+		}
+
+		visible = {
+			FROM = {
+				NOT = { is_in_faction_with = ROOT }
+				OR = {
+					is_justifying_wargoal_against = ROOT
+					AND = {
+						is_neighbor_of = ROOT
+						OR = {
+							has_war_with = ROOT
+							AND = {
+								NOT = { has_government = ROOT }
+								has_offensive_war = yes
+								has_added_tension_amount > 5
+							}
+						}
+					}
+					AND = {
+						NOT = { is_neighbor_of = ROOT }
+						OR = {
+							has_offensive_war_with = ROOT
+							AND = {
+								NOT = { has_government = ROOT }
+								has_offensive_war = yes
+								has_added_tension_amount > 30
+							}
+						}
+					}
+				}
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				NOT = { is_in_faction_with = ROOT }
+				OR = {
+					is_justifying_wargoal_against = ROOT
+					AND = {
+						is_neighbor_of = ROOT
+						OR = {
+							has_war_with = ROOT
+							AND = {
+								NOT = { has_government = ROOT }
+								has_offensive_war = yes
+								has_added_tension_amount > 5
+							}
+						}
+					}
+					AND = {
+						NOT = { is_neighbor_of = ROOT }
+						OR = {
+							has_offensive_war_with = ROOT
+							AND = {
+								NOT = { has_government = ROOT }
+								has_offensive_war = yes
+								has_added_tension_amount > 30
+							}
+						}
+					}
+				}
+			}
+		}
+
+		days_remove = 90
+		days_re_enable = 180
+
+		fire_only_once = yes
+
+		cost = var:war_propaganda_cost?75
+
+		modifier = {
+			war_support_weekly = 0.01
+		}
+
+		complete_effect = {
+			set_country_flag = { flag = war_propaganda_campaign_running value = 1 days = 90 } #TODO_Manu: This is a nasty fix so that the flag gets eventually removed if the target is annexed. days = days_remove
+		}
+		remove_effect = {
+			clr_country_flag = war_propaganda_campaign_running
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_war_support > 0.9
+			}
+		}
+	}
+	
+	institute_press_censorship_fascist_state = {
+
+		icon = generic_political_discourse
+
+		available = {
+			#NOT = { has_idea = free_speech }
+			custom_trigger_tooltip = {
+				tooltip = if_free_speech_tt
+				#tooltip = if_light_censorship_tt
+				if = {
+					limit = {
+						has_idea = free_speech
+						#has_idea = light_censorship
+					}
+					has_war = yes
+				}
+			}
+			if = {
+				limit = { tag = SPR }
+				NOT = { has_idea = SPR_political_violence }
+			}
+			if = {
+				limit = {
+					has_dlc = "Battle for the Bosporus"
+					original_tag = BUL
+				}
+				NOT = {
+					has_country_flag = {
+						flag = BUL_freedom_of_press_flag
+						days < 365
+					}
+					focus_progress = {
+						focus = BUL_freedom_of_press
+						progress > 0
+					}
+				}
+			}
+		}
+
+		visible = {
+			has_government = fascism
+			if = { 
+				limit = { 
+					has_dlc = "Battle for the Bosporus"
+				}
+				NOT = { original_tag = GRE }
+			}
+		}
+	
+		modifier = {
+			communism_drift = -0.01
+			fascism_drift = 0.03
+			democratic_drift = -0.01
+			neutrality_drift = -0.01
+		}
+	
+		days_remove = 360
+		cost = 150
+	
+		ai_will_do = { factor = 0 }
+	}
+	
+	institute_press_censorship_democratic_state = {
+
+		icon = generic_political_discourse
+
+		available = {
+			#NOT = { has_idea = free_speech }
+			custom_trigger_tooltip = {
+				tooltip = if_free_speech_tt
+				#tooltip = if_light_censorship_tt
+				if = {
+					limit = {
+						has_idea = free_speech
+						#has_idea = light_censorship
+					}
+					has_war = yes
+				}
+			}
+			if = {
+				limit = { tag = SPR }
+				NOT = { has_idea = SPR_political_violence }
+			}
+			if = {
+				limit = {
+					tag = TUR
+					has_dlc = "Battle for the Bosporus"
+				}
+				NOT = {
+					has_completed_focus = TUR_privatize_the_anadolu_agency
+				}
+			}
+			if = {
+				limit = {
+					original_tag = BUL
+					has_dlc = "Battle for the Bosporus"				
+				}
+				NOT = {
+					has_country_flag = {
+						flag = BUL_freedom_of_press_flag
+						days < 365
+					}
+					focus_progress = {
+						focus = BUL_freedom_of_press
+						progress > 0
+					}
+				}
+			}
+		}
+
+		visible = {
+			has_government = democratic
+			if = { 
+				limit = { 
+					has_dlc = "Battle for the Bosporus"
+				}
+				NOT = { original_tag = GRE }
+			}
+		}
+		
+		modifier = {
+			communism_drift = -0.01
+			fascism_drift = -0.01
+			democratic_drift = 0.03
+			neutrality_drift = -0.01
+		}
+	
+		days_remove = 360
+		cost = 150
+	
+		ai_will_do = { factor = 0 }
+	}
+	
+	institute_press_censorship_communist_state = {
+		icon = generic_political_discourse
+		available = {
+			#NOT = { has_idea = free_speech }
+			custom_trigger_tooltip = {
+				tooltip = if_free_speech_tt
+				#tooltip = if_light_censorship_tt
+				if = {
+					limit = {
+						has_idea = free_speech
+						#has_idea = light_censorship
+					}
+					has_war = yes
+				}
+			}
+			if = {
+				limit = { tag = SPR }
+				NOT = { has_idea = SPR_political_violence }
+			}
+			if = {
+				limit = {
+					original_tag = BUL
+					has_dlc = "Battle for the Bosporus"
+				}
+				NOT = {
+					has_country_flag = {
+						flag = BUL_freedom_of_press_flag
+						days < 365
+					}
+					focus_progress = {
+						focus = BUL_freedom_of_press
+						progress > 0
+					}
+				}
+			}
+		}
+		visible = {
+			has_government = communism
+			if = { 
+				limit = { has_dlc = "Battle for the Bosporus" }
+				NOT = { original_tag = GRE }
+			}
+		}
+		modifier = {
+			communism_drift = 0.03
+			fascism_drift = -0.01
+			democratic_drift = -0.01
+			neutrality_drift = -0.01
+		}
+		days_remove = 360
+		cost = 150
+		ai_will_do = { factor = 0 }
+	}
+	
+	institute_press_censorship_neutrality_state = {
+		icon = generic_political_discourse
+		available = {
+			#NOT = { has_idea = free_speech }
+			custom_trigger_tooltip = {
+				tooltip = if_free_speech_tt
+				#tooltip = if_light_censorship_tt
+				if = {
+					limit = {
+						has_idea = free_speech
+						#has_idea = light_censorship
+					}
+					has_war = yes
+				}
+			}
+			if = {
+				limit = { tag = SPR }
+				NOT = { has_idea = SPR_political_violence }
+			}
+			if = {
+				limit = {
+					tag = TUR
+					has_dlc = "Battle for the Bosporus"
+				}
+				NOT = { has_completed_focus = TUR_privatize_the_anadolu_agency }
+			}
+			if = {
+				limit = {
+					original_tag = BUL
+					has_dlc = "Battle for the Bosporus"
+				}
+				NOT = {
+					has_country_flag = {
+						flag = BUL_freedom_of_press_flag
+						days < 365
+					}
+					focus_progress = {
+						focus = BUL_freedom_of_press
+						progress > 0
+					}
+				}
+			}
+		}
+		visible = {
+			has_government = neutrality
+			if = { 
+				limit = { has_dlc = "Battle for the Bosporus" }
+				NOT = { original_tag = GRE }
+			}
+		}
+		modifier = {
+			communism_drift = -0.01
+			fascism_drift = -0.01
+			democratic_drift = -0.01
+			neutrality_drift = 0.03
+		}
+		days_remove = 360
+		cost = 150
+		ai_will_do = { factor = 0 }
+	}
+
+	wartime_censorship = {
+		icon = eng_propaganda_campaigns
+		visible = {
+			OR = {
+				has_idea = free_speech
+				has_idea = light_censorship
+			}
+		}
+		available = {
+			has_war = yes
+			OR = {
+				has_idea = free_speech
+				has_idea = light_censorship
+			}
+		}
+		complete_effect = {
+			if = {
+				limit = { has_idea = free_speech }
+				set_country_flag = wtc_free_speech_flag
+			}
+			if = {
+				limit = { has_idea = light_censorship }
+				set_country_flag = wtc_light_censorship_flag
+			}
+			add_ideas = moderate_censorship
+		}
+		cost = var:wartime_censorship_cost?75
+		ai_will_do = {
+			modifier = {
+				factor = 1
+				has_government = democratic
+			}
+			modifier = {
+				factor = 2
+				has_government = neutrality
+			}
+			modifier = {
+				factor = 5
+				NOT = {
+					has_government = democratic
+					has_government = neutrality
+				}
+			}
+		}
+	}
+}

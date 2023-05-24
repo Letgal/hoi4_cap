@@ -1,0 +1,171 @@
+ideas = {
+censorship_laws = {
+	law = yes
+	use_list_view = yes
+
+	free_speech = {
+		available = {
+			has_war = no
+			NOT = {
+				has_government = fascism
+				has_government = communism
+			}
+		}
+
+		cost = 50
+		removal_cost = -1
+		level = 1
+
+		modifier = {
+			# political_power_gain = 0.3
+			stability_factor = -0.1
+			democratic_drift = 0.1
+			drift_defence_factor = -0.3
+			# foreign_subversive_activites = 0.3
+			resistance_growth = 0.3
+			encryption = -1
+			decryption = 0.5
+			custom_modifier_tooltip = free_speech_fd_modifier_tt
+		}
+
+		cancel_if_invalid = no
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 5
+				has_government = democratic
+				has_war = no
+			}
+		}
+	}
+
+	light_censorship = {
+		available = {
+			NOT = {
+				has_government = fascism
+				has_government = communism
+			}
+		}
+
+		cost = 100
+		removal_cost = -1
+		level = 2
+
+		on_add = { set_variable = { fd_daily_censorship = 0.005 } }
+
+		modifier = {
+			# political_power_gain = 0.15
+			stability_factor = -0.05
+			democratic_drift = 0.05
+			drift_defence_factor = -0.1
+			# foreign_subversive_activites = 0.15
+			resistance_growth = 0.1
+			encryption = -0.5
+			decryption = 0.25
+			custom_modifier_tooltip = light_censorship_fd_modifier_tt
+		}
+
+		cancel_if_invalid = no
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 5
+				has_government = neutrality
+				has_war = no
+			}
+			modifier = {
+				factor = 10
+				has_government = democratic
+				has_war = yes
+			}
+		}
+	}
+
+	moderate_censorship = {
+		available = { 
+			NOT = { has_government = democratic }
+		}
+
+		cost = 150
+		removal_cost = -1
+		level = 3
+
+		on_add = { set_variable = { fd_daily_censorship = 0.01 } } # add_stability = -0.1
+
+		modifier = {
+			political_power_gain = -0.15
+			stability_factor = 0.05
+			democratic_drift = -0.01
+			drift_defence_factor = 0.1
+			# foreign_subversive_activites = -0.15
+			resistance_growth = -0.1
+			encryption = 0.5
+			decryption = -0.25
+			custom_modifier_tooltip = moderate_censorship_fd_modifier_tt
+		}
+
+		default = yes
+		cancel_if_invalid = no
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 1
+				OR = {
+					has_government = communism
+					has_government = fascism
+				}
+				has_war = no
+			}
+			modifier = {
+				factor = 10
+				has_government = neutrality
+				has_war = yes
+			}
+		}
+	}
+
+	total_censorship = {
+		available = {
+			OR = {
+				has_government = communism
+				has_government = fascism
+			}
+		}
+
+		cost = 200
+		removal_cost = -1
+		level = 4
+
+		on_add = { set_variable = { fd_daily_censorship = 0.025 } } # add_stability = -0.2
+
+		modifier = {
+			political_power_gain = -0.3
+			stability_factor = 0.1
+			war_support_factor = 0.1
+			democratic_drift = -0.05
+			drift_defence_factor = 0.3
+			# foreign_subversive_activites = -0.3
+			resistance_growth = -0.3
+			encryption = 1
+			decryption = -0.5
+			custom_modifier_tooltip = total_censorship_fd_modifier_tt
+		}
+
+		cancel_if_invalid = no
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = communism
+					has_government = fascism
+				}
+			}
+		}
+	}
+}
+}

@@ -1,0 +1,27 @@
+scripted_gui = {
+	freedom_desire_screen = {
+		window_name = "freedom_desire_window"
+		context_type = decision_category
+
+		triggers = {
+			fd_affected_rpp_visible = { has_civil_war = no }
+			fd_affected_othertext_visible = { has_civil_war = no }
+			fd_affected_wartime_visible = { has_war = yes has_civil_war = no }
+			fd_inactive_visible = { has_civil_war = yes }
+			cw_betrayal_visible = { has_government = democratic }
+			mass_rallies_visible = { NOT = { has_government = democratic has_government = neutrality } }
+			cw_freedom_aut_visible = { has_government = neutrality }
+			cw_freedom_tot_visible = { OR = { has_government = fascism has_government = communism } }
+		}
+
+		properties = {
+			freedom_desire = { frame = freedom_desire }
+			freedom_rallies = { frame = freedom_rallies_status }
+			freedom_movement = { frame = freedom_movement_status }
+			cw_betrayal = { frame = cw_betrayal_status }
+			mass_rallies = { frame = mass_rallies_status }
+			cw_freedom_aut = { frame = cw_freedom_aut_status }
+			cw_freedom_tot = { frame = cw_freedom_tot_status }
+		}
+	}
+}

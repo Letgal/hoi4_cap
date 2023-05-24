@@ -1,0 +1,27 @@
+ideas = {
+country = {
+	freedom_rallies = {
+		picture = generic_production_bonus
+		cancel = { check_variable = { freedom_desire < 35 } }
+		allowed_civil_war = { always = no }
+		on_add = { set_variable = { freedom_rallies_status = 2 } }
+		on_remove = { set_variable = { freedom_rallies_status = 1 } }
+	}
+	freedom_movement = {
+		picture = EST_democratic_opposition
+		cancel = { check_variable = { freedom_desire < 50 } }
+		allowed_civil_war = { always = no }
+		on_add = { set_variable = { freedom_movement_status = 2 } }
+		on_remove = { set_variable = { freedom_movement_status = 1 } }
+		modifier = { custom_modifier_tooltip = freedom_movement_modifier_tt }
+	}
+	mass_rallies = {
+		picture = generic_production_bonus
+		cancel = { check_variable = { freedom_desire < 65 } }
+		allowed_civil_war = { always = no }
+		on_add = { set_variable = { freedom_rallies_status = 2 } set_variable = { mass_rallies_status = 2 } }
+		on_remove = { set_variable = { freedom_rallies_status = 1 } set_variable = { mass_rallies_status = 1 } }
+		modifier = { custom_modifier_tooltip = mass_rallies_modifier_tt }
+	}
+}
+}

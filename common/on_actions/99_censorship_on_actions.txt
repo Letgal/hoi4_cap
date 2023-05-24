@@ -1,0 +1,140 @@
+on_actions = {
+on_startup = {
+effect = {
+	every_country = {
+		if = {
+			limit = { has_idea = total_censorship }
+			set_variable = { freedom_desire = 45 }
+			set_variable = { fd_daily_censorship = 0.025 }
+		}
+		else_if = {
+			limit = { has_idea = moderate_censorship }
+			set_variable = { freedom_desire = 30 }
+			set_variable = { fd_daily_censorship = 0.01 }
+		}
+		else_if = {
+			limit = { has_idea = light_censorship }
+			set_variable = { freedom_desire = 15 }
+			set_variable = { fd_daily_censorship = 0.005 }
+		}
+		else = { set_variable = { freedom_desire = 0 } }
+
+		set_variable = { freedom_desire_bar_width = freedom_desire }
+		#multiply_variable = { freedom_desire_bar_width = 2.08 }
+
+		if = {
+			limit = { check_variable = { var = freedom_desire value = 40 } }
+			add_ideas = freedom_rallies
+			set_variable = { freedom_rallies_status = 2 }
+			else = { set_variable = { freedom_rallies_status = 1 } }
+		}
+		set_variable = { freedom_movement_status = 1 }
+		set_variable = { cw_betrayal_status = 1 }
+		set_variable = { mass_rallies_status = 1 }
+		set_variable = { cw_freedom_aut_status = 1 }
+		set_variable = { cw_freedom_tot_status = 1 }
+
+		# Var Setup
+		set_variable = { fd_daily_ruling_party = party_popularity@ruling_party }
+		divide_variable = { fd_daily_ruling_party = -12 }
+		if = {
+			limit = { NOT = { has_government = democratic } }
+			set_variable = { fd_daily_democratic_party = party_popularity@democratic }
+			divide_variable = { fd_daily_democratic_party = 6 }
+		}
+	}
+}
+}
+on_daily = {
+effect = {
+	THIS = {
+		clamp_variable = { var = freedom_desire min = 0 max = 100 }
+		if = {
+			limit = {
+				has_civil_war = no
+				NOT = { has_idea = free_speech }
+			}
+
+			# Calculate FD change from RPP/-12
+			set_variable = { fd_daily_ruling_party = party_popularity@ruling_party }
+			divide_variable = { fd_daily_ruling_party = -12 }
+
+			# Calculate FD change from DPP/6
+			if = {
+				limit = { NOT = { has_government = democratic } }
+				set_variable = { fd_daily_democratic_party = party_popularity@democratic }
+				if = {
+					limit = { has_country_flag = dp_ineffective }
+					divide_variable = { fd_daily_democratic_party = 12 }
+					else = { divide_variable = { fd_daily_democratic_party = 6 } }
+				}
+			}
+
+			# Clear the daily change value
+			clear_variable = fd_daily
+
+			# Add up the factors
+			add_to_variable = { fd_daily = fd_daily_ruling_party }
+			add_to_variable = { fd_daily = fd_daily_democratic_party }
+			add_to_variable = { fd_daily = fd_daily_censorship }
+
+			# If at war, effects are decreased by 75%
+			if = {
+				limit = { has_war = yes }
+				divide_variable = { fd_daily = 4 }
+			}
+
+			# Add sum to the FD daily
+			add_to_variable = { freedom_desire = fd_daily }
+
+			# Record this in logs
+			log = "[THIS.GetTag]: [?fd_daily] (overall), [?fd_daily_ruling_party|=2%%] (RPP), [?fd_daily_democratic_party|=2%%] (DPP), [?fd_daily_censorship|=3%%] (law) –[GetDateText]"
+
+			if = {
+				limit = { has_active_mission = cw_betrayal_mission }
+				set_variable = { cw_betrayal_status = 2 }
+				else = { set_variable = { cw_betrayal_status = 1 } }
+			}
+			if = {
+				limit = { has_active_mission = cw_freedom_mission }
+				set_variable = { cw_freedom_aut_status = 2 }
+				set_variable = { cw_freedom_aut_status = 2 }
+				else = { set_variable = { cw_freedom_tot_status = 1 } set_variable = { cw_freedom_tot_status = 1 } }
+			}
+
+			#if = {
+			#	limit = { has_idea = total_censorship }
+			#	add_to_variable = { freedom_desire = 0.02 }
+			#}
+			#else_if = {
+			#	limit = { has_idea = moderate_censorship }
+			#	add_to_variable = { freedom_desire = 0.01 }
+			#}
+			#else_if = {
+			#	limit = { has_idea = light_censorship }
+			#	add_to_variable = { freedom_desire = 0.02 }
+			#}
+			#if = {
+			#	limit = { OR = { has_government = fascism has_government = communism } }
+			#	add_to_variable = { freedom_desire = 0.5 }
+			#	else = {
+			#		add_to_variable = { freedom_desire = 0.25 }
+			#	}
+			#}
+			else_if = {
+				limit = { has_idea = free_speech }
+				subtract_from_variable = { freedom_desire = 0.05 }
+			}
+		}
+	}
+}
+}
+on_government_change = {
+effect = {
+	if = {
+		limit = { has_government = democratic }
+		clear_variable = fd_daily_democratic_party # Should be recalculated after changing back
+	}
+}
+}
+}
