@@ -18,7 +18,8 @@
  cw_traitors_avert:0 "Менее §Y65%§! желания свободы"
  cw_freedom_mission:0 "Надвигается гражданская война за свободу"
  cw_freedom_mission_desc:0 "Самопровозглашённые борцы за свободу планируют скоро начать гражданскую войну, которую возглавит [GetDemocraticParty].\n\nЧтобы избежать гражданской войны, желание свободы не должно превышать 95%."
- cw_freedom_avert:0 "Менее §Y95%§! желания свободы"
+ cw_freedom_a_avert:0 "Менее §Y80%§! желания свободы" # Authoritarian
+ cw_freedom_t_avert:0 "Менее §Y95%§! желания свободы" # Totalitarian
 
 ### SCRIPTED GUI ###
  freedom_desire:0 "Желание свободы"

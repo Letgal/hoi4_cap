@@ -18,7 +18,8 @@
  cw_traitors_avert:0 "Less than §Y65%§! Freedom Desire"
  cw_freedom_mission:0 "Upcoming civil war for liberty"
  cw_freedom_mission_desc:0 "Self-proclaimed freedom fighters plan to start a civil war led by the [GetDemocraticParty] soon.\n\nTo avoid a civil war, Freedom Desire must be less than 95%."
- cw_freedom_avert:0 "Less than §Y95%§! Freedom Desire"
+ cw_freedom_a_avert:0 "Less than §Y80%§! Freedom Desire" # Authoritarian
+ cw_freedom_t_avert:0 "Less than §Y95%§! Freedom Desire" # Totalitarian
 
 ### SCRIPTED GUI ###
  freedom_desire:0 "Freedom Desire"
