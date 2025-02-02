@@ -1,0 +1,29 @@
+﻿l_russian:
+### LAWS ###
+ censorship_laws:0 "Закон о цензуре"
+ free_speech:0 "Свобода слова"
+ free_speech_desc:0 "Свобода прессы совершенно неограничена."
+ free_speech_fd_modifier_tt:0 "Желание свободы: §R-0.05§! ежедневно"
+ light_censorship:0 "Лёгкая цензура"
+ light_censorship_desc:0 "Самые радикальные взгляды ограничены."
+ light_censorship_fd_modifier_tt:0 "Желание свободы: §R+0.005§! ежедневно"
+ moderate_censorship:0 "Умеренная цензура"
+ moderate_censorship_desc:0 "Критика правительства ограничена. Разрешена лишь некоторая проправительственная пресса. Обычно используется демократическими и нейтральными странами в военное время."
+ moderate_censorship_fd_modifier_tt:0 "Желание свободы: §R+0.01§! ежедневно"
+ total_censorship:0 "Полная цензура"
+ total_censorship_desc:0 "Разрешена только одобренная государством пресса. Обычно используется тоталитарными старанами."
+ total_censorship_fd_modifier_tt:0 "Желание свободы: §R+0.025§! ежедневно"
+ censorship_undefined:0 "§gНе указано§!" # Fallback for scripted localization
+
+### IDEAS ###
+ freedom_rallies:0 "Митинги"
+ freedom_rallies_desc:0 "Порой вызывает митинги за свободу."
+ freedom_movement:0 "Организованное движение за свободу"
+ freedom_movement_desc:0 "Организованное движение за свободу."
+ freedom_movement_modifier_tt:0 "Прирост желания свободы: §Rx1.4§!"
+ mass_rallies:0 "Массовые митинги"
+ mass_rallies_desc:0 "Чаще вызывает митинги за свободу."
+ mass_rallies_modifier_tt:0 "Прирост желания свободы: §Rx1.6§!"
+
+if_free_speech_tt:0 "Если есть §Y$free_speech$§!, государство должно быть в состоянии войны"
+if_light_censorship_tt:0 "Если есть §Y$light_censorship$§!, государство должно быть в состоянии войны"
